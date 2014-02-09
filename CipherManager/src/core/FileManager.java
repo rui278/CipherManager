@@ -84,64 +84,69 @@ public class FileManager {
 		}
 	}
 
-	public PassStruct encrypt(KeyStruct key, String password) {
+	public PassStruct encrypt(KeyStruct key, char[] password) {
 		
-		PassStruct pass = new PassStruct();
-		
-		MessageDigest md;
-		
-		String masterKey = "";
-		
-		for(int i = 0; i < key.getMasterKey().length; i++){
-			masterKey = masterKey + key.getMasterKey()[i]; 
-		}
-		
-		
-		try {
-			md = MessageDigest.getInstance("SHA-256");
-			System.out.print("MasterKey: " + masterKey + "\n");
-			md.update(masterKey.getBytes());
-
-	        byte byteData[] = md.digest();
-	        
-	        System.out.print("ByteData: "+ byteData.toString() + "masterkey: " + masterKey);
-	        
-	        try {
-				Cipher cipher = Cipher.getInstance("AES");
-				SecretKeySpec k = new SecretKeySpec(byteData, "AES");
-				
-				try {
-					cipher.init(Cipher.ENCRYPT_MODE, k);
-					
-					try {
-					
-						byte[] encryptedData = cipher.doFinal(password.getBytes());
-
-						byte[] encryptedData2 = cipher.doFinal(key.getService().getBytes());
-						
-												
-						System.out.print(encryptedData);
-						System.out.print("\n");
-						
-						pass.setAfterPass(encryptedData.toString());
-						pass.setAfterService(encryptedData2.toString());
-						
-						return pass;
-					} catch (IllegalBlockSizeException e) {
-						e.printStackTrace();
-					} catch (BadPaddingException e) {
-						e.printStackTrace();
-					}
-				} catch (InvalidKeyException e) {
-					e.printStackTrace();
-				}
-			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
-			}
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}		
+//		PassStruct pass = new PassStruct();
+//		
+//		MessageDigest md;
+//		
+//		String masterKey = "";
+//		
+//		for(int i = 0; i < key.getMasterKey().length; i++){
+//			masterKey = masterKey + key.getMasterKey()[i]; 
+//		}
+//		
+//		
+//		try {
+//			md = MessageDigest.getInstance("SHA-256");
+//			System.out.print("MasterKey: " + masterKey + "\n");
+//			md.update(masterKey.getBytes());
+//
+//	        byte byteData[] = md.digest();
+//	        
+//	        System.out.print("ByteData: "+ byteData.toString() + "masterkey: " + masterKey);
+//	        
+//	        try {
+//				Cipher cipher = Cipher.getInstance("AES");
+//				SecretKeySpec k = new SecretKeySpec(byteData, "AES");
+//				
+//				try {
+//					cipher.init(Cipher.ENCRYPT_MODE, k);
+//					
+//					try {
+//					
+//						byte[] encryptedData = cipher.doFinal(password.getBytes());
+//
+//						byte[] encryptedData2 = cipher.doFinal(key.getService().getBytes());
+//						
+//												
+//						System.out.print(encryptedData);
+//						System.out.print("\n");
+//						
+//						pass.setAfterPass(encryptedData.toString());
+//						pass.setAfterService(encryptedData2.toString());
+//						
+//						return pass;
+//					} catch (IllegalBlockSizeException e) {
+//						e.printStackTrace();
+//					} catch (BadPaddingException e) {
+//						e.printStackTrace();
+//					}
+//				} catch (InvalidKeyException e) {
+//					e.printStackTrace();
+//				}
+//			} catch (NoSuchPaddingException e) {
+//				e.printStackTrace();
+//			}
+//		} catch (NoSuchAlgorithmException e) {
+//			e.printStackTrace();
+//		}		
         
 		return null;
+	}
+
+	public void writeToFile() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -25,7 +25,7 @@ public class Action implements Runnable {
 	
 	private KeyStruct key;
 	private int actionID;
-	private int size = 15;
+	private int size = 20;
 	
 	@Override
 	public void run() {
@@ -80,9 +80,15 @@ public class Action implements Runnable {
 	//Create Password Method
 	private void createPswd(KeyStruct key){
 		
-		String password = this.generatePassword();
+		char[] password = this.generatePassword();
+		
+		System.out.print(password);
+		
+		PassStruct genPass = new PassStruct(mainClass.file.encrypt(key, password), key.getService(), null);
+		
+		mainClass.file.writeToFile();
 
-		PassStruct pass = new PassStruct(mainClass.file.encrypt(key, password),key.getService(), password);
+	//	PassStruct pass = new PassStruct(mainClass.file.encrypt(key, password),key.getService(), password);
 				
 		
 		return;
@@ -121,64 +127,29 @@ public class Action implements Runnable {
 	
 	//Generates Passwords//
 	
-	private String generatePassword() {
-		int A = 'A';
-		int Z = 'Z';
-		int a = 'a';
-		int z = 'z';
-		int char0 = '0';
-		int char9 = '9';
-		int excalamtion = '!';
-		int fslash = '/';
-		int doublepoint = ':';
-		int at = '@';
-		int rightBrackOpen = '[';
-		int underscore = '_';
-		int curlyOpen = '{';
-		int curlyClose = '}';
+	private char[] generatePassword() {
 
-		String genPass = "";
+
+		char[] genPass = new char[20];
 		
-		SecureRandom random = new SecureRandom();
+				SecureRandom random = new SecureRandom();
 
-
+				for (int fi = -10; fi < 10; fi++){
+					int out = fi % 5;
+					System.out.print(out+"\n");
+				}
 		for(int i = 0; i < size; i++){
 			
-			int j = 1 + (int)(random.nextFloat() * ((4 - 1) + 1));
-			int offset = 0;
 			
-			switch(j){
-				case 1:
-					offset = A + (int)(random.nextFloat() * ((Z - A) + 1));
-					break;
-				case 2:
-					offset = a + (int)(random.nextFloat() * ((z - a) + 1));
-					break;
-				case 3:
-					offset = char0 + (int)(random.nextFloat() * ((char9 - char0) +1));
-					break;
-				case 4:
-					int k = 1 + (int)(random.nextFloat() * ((4 - 1) + 1));
-					switch(k){
-						case 1:
-							offset = excalamtion + (int)(random.nextFloat() * ((fslash - excalamtion) + 1));
-							break;
-						case 2:
-							offset = doublepoint+ (int)(random.nextFloat() * ((at - doublepoint) + 1));
-							break;
-						case 3:
-							offset = rightBrackOpen + (int)(random.nextFloat() * ((underscore - rightBrackOpen) + 1));
-							break;
-						case 4:
-							offset = curlyOpen + (int)(random.nextFloat() * ((curlyClose - curlyOpen) + 1));
-							break;
-						default: break;
-					}
-				default: break;
-			}
-			char add = (char)offset;
+			int chooserInt = random.nextInt();
 			
-			genPass = genPass + add;
+			if (chooserInt < 0) chooserInt *=-1;
+			
+			chooserInt %= 92;
+			chooserInt += 33;
+			
+			
+			genPass[i] = (char) chooserInt;
 		}
 		
 		return genPass;
